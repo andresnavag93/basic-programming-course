@@ -1,5 +1,7 @@
 let ataqueJugador;
 let ataqueEnemigo;
+let vidasJugador = 3;
+let vidasEnemigo = 3;
 
 function iniciarJuego() {
   let botonMascotaJugador = document.getElementById("boton-mascota");
@@ -69,10 +71,45 @@ function ataqueAleatorioEnemigo() {
     ataqueEnemigo = "TIERRA";
   }
 
-  crearMensaje();
+  combate();
 }
 
-function crearMensaje() {
+function combate() {
+  let spanVidasJugador = document.getElementById("vidas-jugador");
+  let spanVidasEnemigo = document.getElementById("vidas-enemigo");
+
+  if (ataqueEnemigo == ataqueJugador) {
+    crearMensaje("EMPATE");
+  } else if (ataqueJugador == "FUEGO" && ataqueEnemigo == "TIERRA") {
+    crearMensaje("GANASTE");
+    vidasEnemigo--;
+    spanVidasEnemigo.innerHTML = vidasEnemigo;
+  } else if (ataqueJugador == "AGUA" && ataqueEnemigo == "FUEGO") {
+    crearMensaje("GANASTE");
+    vidasEnemigo--;
+    spanVidasEnemigo.innerHTML = vidasEnemigo;
+  } else if (ataqueJugador == "TIERRA" && ataqueEnemigo == "AGUA") {
+    crearMensaje("GANASTE");
+    vidasEnemigo--;
+    spanVidasEnemigo.innerHTML = vidasEnemigo;
+  } else {
+    crearMensaje("PERDISTE");
+    vidasJugador--;
+    spanVidasJugador.innerHTML = vidasJugador;
+  }
+
+  revisarVidas();
+}
+
+function revisarVidas() {
+  if (vidasEnemigo == 0) {
+    crearMensajeFinal("FELICITACIONES! Ganaste :)");
+  } else if (vidasJugador == 0) {
+    crearMensajeFinal("Lo siento, perdiste :(");
+  }
+}
+
+function crearMensaje(resultado) {
   let sectionMensajes = document.getElementById("mensajes");
 
   let parrafo = document.createElement("p");
@@ -81,7 +118,17 @@ function crearMensaje() {
     ataqueJugador +
     ", las mascota del enemigo atacó con " +
     ataqueEnemigo +
-    "- PENDIENTE";
+    "- " +
+    resultado;
+
+  sectionMensajes.appendChild(parrafo);
+}
+
+function crearMensajeFinal(resultadoFinal) {
+  let sectionMensajes = document.getElementById("mensajes");
+
+  let parrafo = document.createElement("p");
+  parrafo.innerHTML = resultadoFinal;
 
   sectionMensajes.appendChild(parrafo);
 }
@@ -90,4 +137,4 @@ function aleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-window.addEventListener("load", iniciarJuego); // Cuando se carga el html
+window.addEventListener("load", iniciarJuego);
