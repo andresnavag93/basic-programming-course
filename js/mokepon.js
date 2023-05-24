@@ -199,8 +199,6 @@ function iniciarJuego() {
 }
 
 function seleccionarMascotaJugador() {
-  sectionSeleccionarMascota.style.display = "none";
-
   if (inputHipodoge.checked) {
     spanMascotaJugador.innerHTML = inputHipodoge.id;
     mascotaJugador = inputHipodoge.id;
@@ -212,7 +210,10 @@ function seleccionarMascotaJugador() {
     mascotaJugador = inputRatigueya.id;
   } else {
     alert("Selecciona una mascota");
+    return;
   }
+
+  sectionSeleccionarMascota.style.display = "none";
 
   extraerAtaques(mascotaJugador);
   sectionVerMapa.style.display = "flex";
