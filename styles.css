@@ -5,6 +5,10 @@ body {
   background-color: #041562;
 }
 
+button {
+  user-select: none;
+}
+
 #seleccionar-mascota {
   display: flex;
   flex-direction: column;
